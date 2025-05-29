@@ -39,7 +39,13 @@ git clone https://github.com/DavidLiu0619/ucla_clubs_rag_api.git
 cd ucla_clubs_rag_api
 ```
 
-2. Set up your Gemini API key following the instructions in `API_Key_Guide.rtf`
+2. Create your .env file and set up your Gemini API key in your .env file:
+
+```bash
+cat > .env <<EOF
+GOOGLE_API_KEY=your_actual_gemini_api_key_here
+EOF
+```
 
 3. Build and run with Docker:
 ```bash
@@ -55,7 +61,7 @@ Example query:
 curl -H "Content-Type: application/json" -X POST -d '{"question":"I am a freshman student. Can you recommend some UCLA clubs?"}' "http://localhost:5002/ask"
 ```
 
-Below command line is after I deployment to Google Cloud Run:
+Below command line after deployment to Google Cloud Run:
 
 ```bash
 curl -X POST "https://ucla-clubs-rag-api-980752141572.us-central1.run.app/ask" -H "Content-Type: application/json" -d '{"question":"I am a freshman student. Can you recommend some UCLA clubs?"}'
@@ -79,9 +85,7 @@ To contribute to the project:
 3. Test thoroughly
 4. Submit a pull request
 
-## License
-
-[Your chosen license]
+## MIT License
 
 ## Acknowledgments
 

@@ -6,6 +6,12 @@ A Retrieval Augmented Generation (RAG) API that provides intelligent responses a
 
 This project implements a RAG pipeline that combines a vector database with a Large Language Model to provide accurate, contextual information about UCLA clubs and organizations. The system processes queries in natural language and returns relevant information by searching through a curated database of UCLA club descriptions.
 
+## Data
+
+The system uses a cleaned dataset of UCLA organizations (`ucla_orgs_cleaned_unique.csv`) which contains information about various student clubs and organizations. This data is processed and stored in a Chroma vector database for efficient semantic search. 
+
+The data is webscrapped from https://community.ucla.edu/studentorgs
+
 ## Repository Structure
 
 | File | Description |
@@ -23,17 +29,17 @@ This project implements a RAG pipeline that combines a vector database with a La
 
 - Python 3.8+
 - Docker and Docker Compose
-- OpenAI API Key (see API_Key_Guide.rtf for setup)
+- Google Gemini API Key (see API_Key_Guide and Website for setup): https://ai.google.dev/gemini-api/docs/api-key
 
 ## Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/ucla_clubs_rag_api.git
+git clone https://github.com/DavidLiu0619/ucla_clubs_rag_api.git
 cd ucla_clubs_rag_api
 ```
 
-2. Set up your OpenAI API key following the instructions in `API_Key_Guide.rtf`
+2. Set up your Gemini API key following the instructions in `API_Key_Guide.rtf`
 
 3. Build and run with Docker:
 ```bash
@@ -46,14 +52,17 @@ The API provides endpoints for querying information about UCLA clubs. You can us
 
 Example query:
 ```bash
-curl -X POST "http://localhost:8000/query" \
-     -H "Content-Type: application/json" \
-     -d '{"question": "Tell me about computer science clubs at UCLA"}'
+curl -H "Content-Type: application/json" -X POST -d '{"question":"I am a freshman student. Can you recommend some UCLA clubs?"}' "http://localhost:5002/ask"
 ```
 
-## Data
+Below command line is after I deployment to Google Cloud Run:
 
-The system uses a cleaned dataset of UCLA organizations (`ucla_orgs_cleaned_unique.csv`) which contains information about various student clubs and organizations. This data is processed and stored in a Chroma vector database for efficient semantic search.
+```bash
+curl -X POST "https://ucla-clubs-rag-api-980752141572.us-central1.run.app/ask" -H "Content-Type: application/json" -d '{"question":"I am a freshman student. Can you recommend some UCLA clubs?"}'
+```
+
+You will receive the answer from Gemini, and if you want, you can modify the question and ask questions related to UCLA Organizations. 
+
 
 ## Architecture
 
@@ -74,13 +83,8 @@ To contribute to the project:
 
 [Your chosen license]
 
-## Contributors
-
-- [Your Name]
-- [Other Contributors]
-
 ## Acknowledgments
 
 - UCLA for providing the organizations data
-- OpenAI for the LLM capabilities
+- Gemini for the LLM capabilities
 - Chroma for the vector database

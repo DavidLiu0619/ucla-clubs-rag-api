@@ -1,72 +1,86 @@
-# UCLA Clubs RAG
+# UCLA Clubs RAG API
 
-A Retrieval Augmented Generation (RAG) system for UCLA clubs and organizations information.
+A Retrieval Augmented Generation (RAG) API that provides intelligent responses about UCLA student organizations and clubs using natural language processing.
 
 ## Overview
 
-This project implements a RAG-based system to provide accurate and contextual information about UCLA clubs and student organizations. It combines the power of large language models with a curated database of UCLA club information to offer precise and up-to-date responses to queries about campus organizations.
+This project implements a RAG pipeline that combines a vector database with a Large Language Model to provide accurate, contextual information about UCLA clubs and organizations. The system processes queries in natural language and returns relevant information by searching through a curated database of UCLA club descriptions.
 
-## Features
+## Repository Structure
 
-- Natural language queries about UCLA clubs
-- Accurate information retrieval using RAG architecture
-- Context-aware responses about club activities, meetings, and events
-- Real-time information updates
+| File | Description |
+|------|-------------|
+| `rag_pipeline.py` | Core RAG implementation for processing queries |
+| `server.py` | FastAPI/Flask server that exposes the RAG endpoints |
+| `ucla_clubs_rag_llm.ipynb` | Jupyter notebook for RAG pipeline development and testing |
+| `ucla_orgs_cleaned_unique.csv` | Cleaned dataset of UCLA organizations |
+| `requirements.txt` | Python dependencies |
+| `Dockerfile` | Container configuration for deployment |
+| `docker-compose.yml` | Local development container orchestration |
+| `curl_test.sh` | Example API requests for testing |
 
 ## Prerequisites
 
 - Python 3.8+
-- Required Python packages (listed in `requirements.txt`)
-- Access to vector database (if applicable)
-- API keys for LLM service (if applicable)
+- Docker and Docker Compose
+- OpenAI API Key (see API_Key_Guide.rtf for setup)
 
 ## Installation
 
-1. Clone the repository:
+1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/ucla_clubs_rag.git
-cd ucla_clubs_rag
+git clone https://github.com/your-username/ucla_clubs_rag_api.git
+cd ucla_clubs_rag_api
 ```
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+2. Set up your OpenAI API key following the instructions in `API_Key_Guide.rtf`
 
-3. Set up environment variables:
+3. Build and run with Docker:
 ```bash
-cp .env.example .env
-# Edit .env with your API keys and configuration
+docker compose up -d
 ```
 
 ## Usage
 
-[Add specific usage instructions based on your implementation]
+The API provides endpoints for querying information about UCLA clubs. You can use the provided `curl_test.sh` script to test the API endpoints.
 
-## Project Structure
-
-```
-ucla_clubs_rag/
-├── data/               # Data storage for club information
-├── src/               # Source code
-├── tests/             # Test files
-├── requirements.txt   # Python dependencies
-└── README.md         # This file
+Example query:
+```bash
+curl -X POST "http://localhost:8000/query" \
+     -H "Content-Type: application/json" \
+     -d '{"question": "Tell me about computer science clubs at UCLA"}'
 ```
 
-## Contributing
+## Data
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+The system uses a cleaned dataset of UCLA organizations (`ucla_orgs_cleaned_unique.csv`) which contains information about various student clubs and organizations. This data is processed and stored in a Chroma vector database for efficient semantic search.
+
+## Architecture
+
+1. **Vector Database**: Uses Chroma DB to store and retrieve club information embeddings
+2. **RAG Pipeline**: Implements retrieval-augmented generation to combine retrieved context with LLM responses
+3. **API Layer**: Exposes the functionality through a REST API
+
+## Development
+
+To contribute to the project:
+
+1. Create a new branch for your feature
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
 
 ## License
 
-[Add your chosen license]
+[Your chosen license]
 
-## Contact
+## Contributors
 
-[Add contact information]
+- [Your Name]
+- [Other Contributors]
 
 ## Acknowledgments
 
-- UCLA Student Organizations
-- [Add other acknowledgments]
+- UCLA for providing the organizations data
+- OpenAI for the LLM capabilities
+- Chroma for the vector database
